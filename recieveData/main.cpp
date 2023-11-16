@@ -1,6 +1,18 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include "Interfacemanager.h"
 
+static QObject *UserInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine)
+    Q_UNUSED(scriptEngine)
+
+    //qDebug() << "Creating";
+
+    interfacemanager *m_interfacemanager = interfacemanager::getInstance();
+
+    return m_interfacemanager;
+}
 
 int main(int argc, char *argv[])
 {
@@ -10,6 +22,11 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    interfacemanager *m_interfacemanager = new interfacemanager;
+    qmlRegisterSingletonType<interfacemanager>("m_interfacemanager", 1, 0, "InterfaceManager", UserInstance);
+
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
         &app, [url](QObject *obj, const QUrl &objUrl) {
