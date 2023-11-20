@@ -1,6 +1,7 @@
 #include "Interfacemanager.h"
 #include <iostream>
 #include <string.h>
+#include <QDebug>
 interfacemanager* interfacemanager::mInstance = NULL;
 
 interfacemanager::interfacemanager(QObject *parent)
@@ -9,14 +10,13 @@ interfacemanager::interfacemanager(QObject *parent)
     mInstance = this;
     m_jsonParsing = new jsonParsing;
     m_udpSocketBind = new UdpSocketBind;
-    int bindStatus = m_udpSocketBind->bindUdp();
-    if(!bindStatus){
-        connect(m_udpSocketBind->socket, SIGNAL(readyRead()),m_jsonParsing, SLOT(toJsonDoc(const QByteArray &refBuffer)));
-    }
+    m_udpSocketBind->initSocket();
+    connect(m_udpSocketBind, SIGNAL(sendbuffer(QByteArray)),
+                m_jsonParsing, SLOT(toJsonDoc(QByteArray)));
 }
 
 interfacemanager *interfacemanager::getInstance()
 {
-    std::cout << "getinstance"<<mInstance <<endl;
+    std::cout << "getinstance"<<mInstance <<std::endl;
     return mInstance;
 }

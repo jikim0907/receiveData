@@ -3,18 +3,22 @@
 jsonParsing::jsonParsing(QObject *parent)
     : QObject(parent){}
 
-void jsonParsing::toJsonDoc(const QByteArray &refBuffer){
-    jsonDoc = QJsonDocument::fromJson(refBuffer);
+void jsonParsing::toJsonDoc(QByteArray tmpbuffer){
+
+    qDebug() << "start parsing ...";
+
+    jsonDoc = QJsonDocument::fromJson(tmpbuffer);
     jsonObject = jsonDoc.object();
 
     QJsonValue jsonObjPose = jsonObject.value("pose");
     QJsonArray coordArray = jsonObjPose.toArray();
 
-    for(int i = 0; coordArray.count();i++){
+    for(int i = 0; i<coordArray.count();i++){
         QJsonObject coorObj = coordArray.at(i).toObject();
 
         xPosition = coorObj["x"].toInt();
         yPosition = coorObj["y"].toInt();
+
         switch (i) {
             case 0:
                 skelPartStruct.HeadCoord.x = xPosition;

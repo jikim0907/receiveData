@@ -7,7 +7,7 @@ static QObject *UserInstance(QQmlEngine *engine, QJSEngine *scriptEngine)
     Q_UNUSED(engine)
     Q_UNUSED(scriptEngine)
 
-    //qDebug() << "Creating";
+    qDebug() << "Creating";
 
     interfacemanager *m_interfacemanager = interfacemanager::getInstance();
 
@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    interfacemanager *m_interfacemanager = new interfacemanager;
-    qmlRegisterSingletonType<interfacemanager>("m_interfacemanager", 1, 0, "InterfaceManager", UserInstance);
+    interfacemanager *interFacemanager = new interfacemanager;
+    qmlRegisterSingletonType<interfacemanager>("interFacemanager", 1, 0, "InterfaceManager", UserInstance);
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));

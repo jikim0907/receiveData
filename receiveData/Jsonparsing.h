@@ -49,7 +49,7 @@ class jsonParsing : public QObject
         int yPosition ;
 
     public slots:
-        void toJsonDoc(const QByteArray &refBuffer);
+        void toJsonDoc(QByteArray buffer);
 };
 
 #endif // JSONPARSING_H

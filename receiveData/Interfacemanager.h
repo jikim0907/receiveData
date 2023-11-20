@@ -9,7 +9,7 @@ class interfacemanager : public QObject
     Q_OBJECT
 
     public:
-    interfacemanager(QObject *parent = 0);
+        interfacemanager(QObject *parent = 0);
     static interfacemanager *getInstance();
     static interfacemanager *mInstance;
         jsonParsing* m_jsonParsing;

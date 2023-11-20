@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QDebug>
+#include <QNetworkDatagram>
 
 class UdpSocketBind : public QObject
 {
@@ -11,14 +12,13 @@ class UdpSocketBind : public QObject
     public:
         UdpSocketBind(QObject *parent = nullptr);
         QUdpSocket *socket;
+        QNetworkDatagram datagram;
         QByteArray buffer;
-        QHostAddress sender;
-        quint16 senderPort;
-
-        int bindUdp();
+        void initSocket();
+    signals:
+        void sendbuffer(QByteArray datagramBuffer);
     public slots:
-        void recieveData();
-
+        void readPendingDatagrams();
 };
 
 #endif // UDPSOCKETBIND_H
